@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d0fedbbb-f49e-411f-a3e5-e33a9ffec23c" name="League Local" url="http://localhost">
+        <fileTransfer mountedRoot="$PROJECT_DIR$/../Deployment" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>
