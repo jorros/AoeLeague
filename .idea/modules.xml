@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/League.iml" filepath="$PROJECT_DIR$/League.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Parser/Parser.iml" filepath="$PROJECT_DIR$/Parser/Parser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/League.iml" filepath="$PROJECT_DIR$/.idea/modules/League.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/League_main.iml" filepath="$PROJECT_DIR$/.idea/modules/League_main.iml" group="League" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/League_test.iml" filepath="$PROJECT_DIR$/.idea/modules/League_test.iml" group="League" />
     </modules>
   </component>
 </project>

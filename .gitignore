@@ -120,4 +120,6 @@ Temporary Items
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
-# Created by .ignore support plugin (hsz.mobi)
+# Age of Empires files
+*.mgz
+deployment/maps/*

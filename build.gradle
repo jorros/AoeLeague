@@ -15,15 +15,10 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'war'
 
 jar {
 	baseName = 'League'
-	version = '0.0.1-SNAPSHOT'
-}
-war {
-	baseName = 'League'
-	version = '0.1.0'
+	version = '0.2.0'
 }
 bootRun {
 	addResources = true
@@ -49,6 +44,9 @@ dependencies {
 
 }
 
+tasks.withType(Jar) {
+	destinationDir = file("$rootDir/deployment")
+}
 
 idea {
 	module {

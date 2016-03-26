@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 open class WebConfig : WebMvcConfigurerAdapter() {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("/resources/css/")
+        registry.addResourceHandler("/maps/**")
+                .addResourceLocations("file://maps/")
     }
 }

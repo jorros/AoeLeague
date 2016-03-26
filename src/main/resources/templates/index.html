@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Wololo Warriors - League</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
-    <link href="../../webapp/resources/css/style.css" th:href="@{css/style.css}" rel="stylesheet" media="screen" />
+    <link href="../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet" media="screen" />
 </head>
 <body>
 <header class="navbar navbar-inverse navbar-fixed-top">
@@ -37,17 +37,13 @@
                     <th>Name</th>
                     <th>Games won</th>
                     <th>Games lost</th>
-                    <th class="hidden-xs">Kills</th>
-                    <th class="hidden-xs">Deaths</th>
                 </tr>
                 <tbody data-bind="foreach: players">
                     <tr>
-                        <td data-bind="text: $index() + 1"></td>
-                        <td data-bind="text: name"></td>
+                        <td data-bind="text: rank"></td>
+                        <td data-bind="text: player"></td>
                         <td data-bind="text: gamesWon"></td>
                         <td data-bind="text: gamesLost"></td>
-                        <td class="hidden-xs" data-bind="text: unitsKilled"></td>
-                        <td class="hidden-xs" data-bind="text: unitsLost"></td>
                     </tr>
                 </tbody>
             </table>
@@ -62,7 +58,7 @@
     $(document).ready(function() {
 
 
-        $.getJSON("/ranking/", function(data) {
+        $.getJSON("/league/S1", function(data) {
             var rankingViewModel = ko.mapping.fromJS(data);
 
             ko.applyBindings(rankingViewModel);
@@ -72,7 +68,7 @@
     });
 
     var update = function() {
-        $.getJSON("/ranking/", function(data) {
+        $.getJSON("/league/S1", function(data) {
             ko.mapping.fromJS(data, rankingViewModel);
         });
     };
