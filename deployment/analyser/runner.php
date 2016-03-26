@@ -34,6 +34,6 @@ foreach($unprocessed as $match) {
 
     $matchProc = new MatchProcessor($match, $db, $config);
     $matchProc->process();
-
-    rename("../unprocessed/" . $match->filename, "../processed/" . $match->filename);
+    
+    $processor->cleanUp($match);
 }

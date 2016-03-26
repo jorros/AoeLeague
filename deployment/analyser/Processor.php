@@ -2,6 +2,7 @@
 
 class Processor
 {
+    /** @var \MongoDB\Database $object */
     private $db;
 
     function __construct($db) {
@@ -52,6 +53,14 @@ class Processor
         }
 
         return $unprocessed;
+    }
+    
+    function cleanUp($match) {
+        $collection = $this->db->selectCollection("processMatch");
+
+        $collection->deleteOne(["_id" => $match->_id]);
+
+        rename("../unprocessed/" . $match->filename, "../processed/" . $match->filename);
     }
 
     private function getRaw($filename) {
