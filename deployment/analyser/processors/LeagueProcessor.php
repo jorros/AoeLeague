@@ -3,7 +3,10 @@
 class LeagueProcessor
 {
     private $match;
+
+    /** @var \MongoDB\Database $object */
     private $db;
+
     private $config;
 
     function __construct($match, $db, $config)
@@ -15,7 +18,7 @@ class LeagueProcessor
 
     function process() {
         $collection = $this->db->selectCollection("league");
-        $league = $collection->findOne(["name" => $this->config->get("League")]);
+        $league = $collection->findOne(["_id" => $this->config->get("League")]);
 
         foreach($this->match->players as $player) {
             $playerObj = null;

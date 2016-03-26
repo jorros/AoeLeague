@@ -10,5 +10,6 @@ class ProcessMatch
     public $winner;
     public $pause;
 
+    /** @var \RecAnalyst\RecAnalyst $object */
     public $raw;
 }

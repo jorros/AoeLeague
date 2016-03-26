@@ -6,9 +6,12 @@ class Match
     public $_class = "de.jorros.league.models.Match";
 
     public $league;
+    
     public $leg;
 
+    /** @var GameSettings $object */
     public $gameSettings;
+
     public $playTime;
 
     public $players;

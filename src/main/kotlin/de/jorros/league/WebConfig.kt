@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 open class WebConfig : WebMvcConfigurerAdapter() {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry.addResourceHandler("/maps/**")
-                .addResourceLocations("file://maps/")
+                .addResourceLocations("file:maps/")
+
+        registry.addResourceHandler("/recordings/**")
+                .addResourceLocations("file:processed/")
     }
 }

@@ -9,6 +9,7 @@ class PlayerMatch
     public $castleTime;
     public $imperialTime;
     public $resignTime;
+    public $colour;
 
     public $buildings;
     public $research;
