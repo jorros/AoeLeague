@@ -15,4 +15,9 @@ class LeagueController @Autowired constructor(val leagueRepository: LeagueReposi
     fun fetchAll(@PathVariable("name")name: String): League {
         return leagueRepository.findByName(name)
     }
+
+    @RequestMapping("/", method = arrayOf(RequestMethod.POST))
+    fun save(league: League) {
+        leagueRepository.save(league)
+    }
 }

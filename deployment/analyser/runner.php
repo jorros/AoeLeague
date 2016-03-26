@@ -32,5 +32,5 @@ foreach($unprocessed as $match) {
     $leagueProc = new LeagueProcessor($match, $db, $config);
     $leagueProc->process();
 
-    rename("unprocessed/" . $match->filename, "processed/" . $match->filename);
+    rename("../unprocessed/" . $match->filename, "../processed/" . $match->filename);
 }

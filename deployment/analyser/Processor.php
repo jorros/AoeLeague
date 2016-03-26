@@ -12,7 +12,7 @@ class Processor
         $collection = $this->db->selectCollection("processMatch");
         $unprocessed = array();
 
-        foreach(glob("unprocessed/*.mgz") as $filepath) {
+        foreach(glob("../unprocessed/*.mgz") as $filepath) {
             $filename = basename($filepath);
             $match = $collection->findOne(["filename" => $filename]);
 
@@ -22,6 +22,7 @@ class Processor
                 $unprocessed[] = $match;
             } else if($match == null) {
                 $match = new ProcessMatch();
+                $match->_id = new MongoDB\BSON\ObjectID();
                 $match->raw = $this->getRaw($filename);
                 $match->players = array();
                 $match->filename = $filename;
@@ -56,7 +57,7 @@ class Processor
     private function getRaw($filename) {
         $ra = new RecAnalyst\RecAnalyst();
 
-        $ra->load("unprocessed/" . $filename, fopen("unprocessed/" . $filename, "r"));
+        $ra->load("../unprocessed/" . $filename, fopen("../unprocessed/" . $filename, "r"));
         $ra->analyze();
 
         return $ra;
