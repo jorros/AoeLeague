@@ -18,10 +18,16 @@ apply plugin: 'spring-boot'
 
 jar {
 	baseName = 'League'
-	version = '0.2.0'
 }
 bootRun {
 	addResources = true
+}
+springBoot {
+	executable = true
+}
+bootRepackage {
+	executable = true
+	excludeDevtools = true
 }
 
 sourceCompatibility = 1.8
@@ -50,7 +56,7 @@ tasks.withType(Jar) {
 
 idea {
 	module {
-		inheritOutputDirs = false
+		inheritOutputDirs = true
 		outputDir = file("$buildDir/classes/main/")
 	}
 }
