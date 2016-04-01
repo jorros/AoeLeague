@@ -1,4 +1,4 @@
-package de.jorros.league.controllers
+package de.jorros.league.controllers.api
 
 import de.jorros.league.repositories.ProcessMatchRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,8 +8,8 @@ import org.springframework.web.multipart.MultipartFile
 import java.io.*
 
 @RestController
-@RequestMapping("/record")
-class RecordController@Autowired constructor(val processMatchRepository: ProcessMatchRepository) {
+@RequestMapping("/api/record")
+class RecordApiController @Autowired constructor(val processMatchRepository: ProcessMatchRepository) {
     @RequestMapping(method = arrayOf(RequestMethod.POST), value = "/upload")
     fun uploadRecord(file: MultipartFile): Any {
         try {

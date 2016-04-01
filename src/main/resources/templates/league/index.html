@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Wololo Warriors - League</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
-    <link href="../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet" media="screen" />
+    <link href="../../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet" media="screen" />
 </head>
 <body>
 <header class="navbar navbar-inverse navbar-fixed-top">
@@ -29,7 +29,7 @@
 </header>
 <div class="container">
     <div class="page-header">
-        <h1>League <small>Season 1</small></h1>
+        <h1>League <small th:text="${league.name}"></small></h1>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -49,42 +49,13 @@
                     <th>Games won</th>
                     <th>Games lost</th>
                 </tr>
-                <tbody data-bind="foreach: players">
-                    <tr>
-                        <td data-bind="text: rank"></td>
-                        <td data-bind="text: player"></td>
-                        <td data-bind="text: gamesWon"></td>
-                        <td data-bind="text: gamesLost"></td>
-                    </tr>
-                </tbody>
+                <tr th:each="player: ${league.players}">
+                    <td th:text="${player.rank}"></td>
+                    <td th:text="${player.player.name}"></td>
+                    <td th:text="${player.gamesWon}"></td>
+                    <td th:text="${player.gamesLost}"></td>
+                </tr>
             </table>
-        </div>
-        <div class="col-md-4">
-            <h1 class="text-center">jorros</h1>
-            <div class="col-md-8 col-md-offset-2">
-                <table class="table">
-                    <tr>
-                        <td class="text-right">Rank:</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">Total matches:</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">&#216; Match time:</td>
-                        <td>30 min</td>
-                    </tr>
-                </table>
-                <h4>Recent matches</h4>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-success">jorros v lee_oades</a>
-                    <a href="#" class="list-group-item list-group-item-success">jorros v tomsonOne</a>
-                    <a href="#" class="list-group-item list-group-item-success">jorros v diemachau</a>
-                    <a href="#" class="list-group-item list-group-item-danger">jorros v laney4912</a>
-                    <a href="#" class="list-group-item list-group-item-success">jorros v MaesBros</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -92,26 +63,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-
-        $.getJSON("/league/S1", function(data) {
-            var rankingViewModel = ko.mapping.fromJS(data);
-
-            ko.applyBindings(rankingViewModel);
-        });
-
-        setInterval(update, 60000);
-    });
-
-    var update = function() {
-        $.getJSON("/league/S1", function(data) {
-            ko.mapping.fromJS(data, rankingViewModel);
-        });
-    };
-
-    update();
-</script>
 </body>
 </html>

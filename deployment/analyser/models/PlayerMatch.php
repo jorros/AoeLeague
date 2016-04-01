@@ -13,4 +13,13 @@ class PlayerMatch
 
     public $buildings;
     public $research;
+    public $buildOrder;
+
+    public $winner;
+    public $mvp;
+    public $totalScore;
+    public $militaryStats;
+    public $economyStats;
+    public $techStats;
+    public $societyStats;
 }

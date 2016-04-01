@@ -1,16 +1,7 @@
 <?php
 
-class PlayerProcessor
+class PlayerProcessor extends BaseProcessor
 {
-    private $match;
-    private $db;
-
-    function __construct($match, $db)
-    {
-        $this->match = $match;
-        $this->db = $db;
-    }
-
     function process() {
         $collection = $this->db->selectCollection("player");
 
@@ -20,7 +11,7 @@ class PlayerProcessor
             if($playerEntity == null) {
                 $playerEntity = new Player();
                 $playerEntity->name = $player->name;
-                $playerEntity->_id = new MongoDB\BSON\ObjectID();
+                $playerEntity->_id = new \MongoDB\BSON\ObjectID();
 
                 $collection->insertOne($playerEntity);
             }

@@ -55,12 +55,12 @@ class Processor
         return $unprocessed;
     }
     
-    function cleanUp($match) {
+    function cleanUp($match, $matchId) {
         $collection = $this->db->selectCollection("processMatch");
 
         $collection->deleteOne(["_id" => $match->_id]);
 
-        rename("../unprocessed/" . $match->filename, "../processed/" . $match->filename);
+        rename("../unprocessed/" . $match->filename, "../processed/" . $matchId . ".mgz");
     }
 
     private function getRaw($filename) {

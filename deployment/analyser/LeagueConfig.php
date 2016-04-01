@@ -2,15 +2,18 @@
 
 class LeagueConfig
 {
-    private $document;
+    public $league;
+    public $leg;
 
+    /**
+     * @param MongoDB\Database $db
+     */
     function __construct($db)
     {
         $collection = $db->selectCollection("config");
-        $this->document = $collection->findOne();
-    }
-
-    function get($key) {
-        return $this->document[$key];
+        $document = $collection->findOne();
+        
+        $this->league = $document->league;
+        $this->leg = $document->leg;
     }
 }

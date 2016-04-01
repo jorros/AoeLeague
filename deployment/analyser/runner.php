@@ -26,14 +26,14 @@ $config = new LeagueConfig($db);
 $unprocessed = $processor->getUnprocessed();
 
 foreach($unprocessed as $match) {
-    $playerProc = new PlayerProcessor($match, $db);
+    $playerProc = new PlayerProcessor($db, $match);
     $playerProc->process();
 
     $leagueProc = new LeagueProcessor($match, $db, $config);
     $leagueProc->process();
 
     $matchProc = new MatchProcessor($match, $db, $config);
-    $matchProc->process();
+    $matchId = $matchProc->process();
     
-    $processor->cleanUp($match);
+    $processor->cleanUp($match, $matchId);
 }

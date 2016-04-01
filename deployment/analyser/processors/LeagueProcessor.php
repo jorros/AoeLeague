@@ -1,31 +1,27 @@
 <?php
 
-class LeagueProcessor
+class LeagueProcessor extends BaseProcessor
 {
-    private $match;
-
-    /** @var \MongoDB\Database $object */
-    private $db;
-
+    /** @var LeagueConfig $object */
     private $config;
 
     function __construct($match, $db, $config)
     {
-        $this->match = $match;
-        $this->db = $db;
+        parent::__construct($db, $match);
         $this->config = $config;
     }
 
     function process() {
         $collection = $this->db->selectCollection("league");
-        $league = $collection->findOne(["_id" => $this->config->get("League")]);
+        $league = $collection->findOne(["_id" => $this->config->league['$id']]);
 
-        foreach($this->match->players as $player) {
+        foreach($this->match->players as $playerName) {
             $playerObj = null;
             $key = null;
+            $id = $this->getPlayerId($playerName);
 
             foreach($league->players as $k => $value) {
-                if($value->player == $player) {
+                if($value->player['$id']->__toString() == $id->__toString()) {
                     $playerObj = $value;
                     $key = $k;
                     break;
@@ -34,15 +30,20 @@ class LeagueProcessor
 
             if($playerObj == null) {
                 $playerObj = new PlayerInLeague();
-                $playerObj->player = $player;
+                $playerObj->player = DBRef::create("player", $this->getPlayerId($playerName));
                 $key = sizeof($league->players);
             }
 
-            if($this->match->winner == $player) {
+            if($this->match->winner == $playerName) {
                 $playerObj->gamesWon++;
             } else {
                 $playerObj->gamesLost++;
             }
+
+            $stat = $this->match->raw->postgameData->players[$playerName->index - 1]->militaryStats;
+
+
+            $playerObj->kd = (float)($stat->unitsKilled + $stat->buildingsRazed) / ($stat->unitsLost + $stat->buildingsLost);
 
             $league->players[$key] = $playerObj;
         }

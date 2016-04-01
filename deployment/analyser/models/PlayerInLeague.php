@@ -7,4 +7,5 @@ class PlayerInLeague
     public $gamesLost = 0;
     public $gamesWon = 0;
     public $rank = 1;
+    public $kd = 0;
 }

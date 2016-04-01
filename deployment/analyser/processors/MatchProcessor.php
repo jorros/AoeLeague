@@ -1,19 +1,13 @@
 <?php
 
-class MatchProcessor
+class MatchProcessor extends BaseProcessor
 {
-    /** @var ProcessMatch $object */
-    private $match;
-
-    /** @var \MongoDB\Database $object */
-    private $db;
-
+    /** @var LeagueConfig $object */
     private $config;
 
     function __construct($match, $db, $config)
     {
-        $this->match = $match;
-        $this->db = $db;
+        parent::__construct($db, $match);
         $this->config = $config;
     }
 
@@ -21,8 +15,8 @@ class MatchProcessor
         $matchObj = new Match();
         $matchObj->_id = new \MongoDB\BSON\ObjectID();
 
-        $matchObj->league = $this->config->get("League");
-        $matchObj->leg = $this->config->get("Leg");
+        $matchObj->league = $this->config->league['$id'];
+        $matchObj->leg = $this->config->leg;
 
         $matchObj->playTime = $this->match->raw->gameInfo->playTime;
 
@@ -42,6 +36,8 @@ class MatchProcessor
 
         imagepng($gd, "../maps/" . $matchObj->_id . ".png");
         imagedestroy($gd);
+
+        return $matchObj->_id;
     }
 
     /**
@@ -49,9 +45,6 @@ class MatchProcessor
      * @return PlayerMatch
      */
     private function processPlayer($player) {
-        $playerCol = $this->db->selectCollection("player");
-        $playerDb = $playerCol->findOne(["name" => $player->name]);
-
         $playerIndex = 1;
         foreach($this->match->raw->playersByIndex as $index => $value) {
             if($value->name == $player->name) {
@@ -60,7 +53,7 @@ class MatchProcessor
         }
 
         $playerMatch = new PlayerMatch();
-        $playerMatch->player = $playerDb->_id;
+        $playerMatch->player = DBRef::create("player", $this->getPlayerId($player->name));
         $playerMatch->civilization = $player->civId;
         $playerMatch->feudalTime = $player->feudalTime;
         $playerMatch->castleTime = $player->castleTime;
@@ -69,6 +62,15 @@ class MatchProcessor
         $playerMatch->resignTime = $player->resignTime;
         $playerMatch->colour = $player->colorId;
         $playerMatch->buildings = $this->match->raw->buildings[$playerIndex];
+
+        $stat = $this->match->raw->postgameData->players[$playerIndex - 1];
+        $playerMatch->winner = $stat->victory;
+        $playerMatch->mvp = $stat->mvp;
+        $playerMatch->totalScore = $stat->totalScores[0];
+        $playerMatch->militaryStats = $stat->militaryStats;
+        $playerMatch->economyStats = $stat->economyStats;
+        $playerMatch->techStats = $stat->techStats;
+        $playerMatch->societyStats = $stat->societyStats;
 
         return $playerMatch;
     }

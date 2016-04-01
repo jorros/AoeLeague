@@ -1,4 +1,4 @@
-package de.jorros.league.controllers
+package de.jorros.league.controllers.api
 
 import de.jorros.league.models.Match
 import de.jorros.league.repositories.MatchRepository
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(value = "/match")
-class MatchController @Autowired constructor(var matchRepository: MatchRepository) {
+@RequestMapping(value = "/api/match")
+class MatchApiController @Autowired constructor(var matchRepository: MatchRepository) {
     @RequestMapping(value = "/league/{league}", method = arrayOf(RequestMethod.GET))
     fun findByLeague(@PathVariable league: String): List<Match> {
         return matchRepository.findByLeague(ObjectId(league))

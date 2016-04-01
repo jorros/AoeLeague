@@ -133,6 +133,13 @@ class RecAnalyst
     public $buildings;
 
     /**
+     * An associative multi-dimensional array containing building_type_id → building_num
+     * pairs for each player.
+     * @var \stdClass
+     */
+    public $postgameData;
+
+    /**
      * Elapsed time for analyzing in milliseconds.
      * @var int
      */
